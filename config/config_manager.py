@@ -11,8 +11,8 @@ class ConfigManager:
         return cls._single_instance
 
     def __init__(self):
-        config_path = 'config.yaml'
-        if not Path(config_path).exists():
+        config_path = self.prompt_templates_path = Path(__file__).resolve().parent / 'config.yaml'
+        if not config_path.exists():
             raise ValueError(f"Config file not found at {config_path}.")
         with open(config_path, 'r') as config_file:
             self.config = yaml.safe_load(config_file)
