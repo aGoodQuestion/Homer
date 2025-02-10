@@ -12,3 +12,4 @@ class Story:
         str = ""
         for i, character in enumerate(self.characters):
             str += f"{i+1}. {character.name} - {character.description}\n"
+        return str
