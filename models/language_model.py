@@ -1,3 +1,4 @@
+from loguru import logger
 from config.config_manager import ConfigManager
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -22,6 +23,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
             ]
+        logger.info(self.measure_prompt(question))
         try:
             resp = self.model.invoke(messages)
         except Exception as e:
@@ -34,6 +36,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
         ]
+        logger.info(self.measure_prompt(question))
         structured_model = self.model.with_structured_output(schema=structure)
         try:
             resp = structured_model.invoke(messages)
