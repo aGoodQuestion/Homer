@@ -1,0 +1,4 @@
+# main LM configuration
+model: "gpt-4o-mini"
+temperature: 0.5
+timeout: 10
