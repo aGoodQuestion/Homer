@@ -22,11 +22,24 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
             ]
-        print(messages)
         try:
             resp = self.model.invoke(messages)
         except Exception as e:
             print(f"Asking the model failed: {e}")
             return None
         return resp
+
+    def prompt_structured(self, question: str, role: str, structure):
+        messages = [
+            SystemMessage(role),
+            HumanMessage(question),
+        ]
+        structured_model = self.model.with_structured_output(schema=structure)
+        try:
+            resp = structured_model.invoke(messages)
+        except Exception as e:
+            print(f"Asking the model failed: {e}")
+            return None
+        return resp
+
 
