@@ -42,4 +42,6 @@ class LanguageModel:
             return None
         return resp
 
+    def measure_prompt(self, prompt: str):
+        return self.model.get_num_tokens(prompt)
 
