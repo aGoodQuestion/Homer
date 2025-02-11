@@ -26,16 +26,19 @@ def draft_scenes(story: Story) -> list[Scene]:
     drafted_scenes = []
     for i in range(story.num_scenes):
         Status().update(type=StatusType.MESSAGE,
-                        message=f"Drafting scene {i+1}...")
+                        message=f"Drafting scene {i + 1}...",
+                        tabs=1)
         scene_description = story.scenes_descriptions[i]
         if i == 0:
             summary_prior = "[This is the first scene in the story so nothing has happened yet.]"
         else:
             Status().update(type=StatusType.MESSAGE,
-                            message=f"...summarizing the story thus far...")
+                            message=f"...summarizing the story thus far...",
+                            tabs=2)
             summary_prior = drafted_scenes[i-1].summary_through_here
         Status().update(type=StatusType.MESSAGE,
-                        message=f"...drafting scene {i+1} text...")
+                        message=f"...drafting scene {i + 1} text...",
+                        tabs=2)
         scene_text = draft_scene(scene_description=scene_description.description,
                                  character_list=story.selective_character_list_string(scene_description.characters),
                                  summary_prior=summary_prior)
@@ -45,7 +48,8 @@ def draft_scenes(story: Story) -> list[Scene]:
                       summary_through_here=summarize_thus_far(summary_prior, scene_text))
         drafted_scenes.append(scene)
         Status().update(type=StatusType.MESSAGE,
-                        message=f'...scene {i+1} drafted."')
+                        message=f'...scene {i + 1} drafted."',
+                        tabs=1)
     return drafted_scenes
 
 
