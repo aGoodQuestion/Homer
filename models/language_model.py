@@ -23,7 +23,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
             ]
-        logger.info(self.measure_prompt(messages))
+        logger.debug(f"passing prompt of {self.measure_prompt(messages)} tokens to LLM")
         try:
             resp = self.model.invoke(messages)
         except Exception as e:
@@ -36,7 +36,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
         ]
-        logger.info(self.measure_prompt(messages))
+        logger.debug(f"passing prompt of {self.measure_prompt(messages)} tokens to LLM")
         structured_model = self.model.with_structured_output(schema=structure)
         try:
             resp = structured_model.invoke(messages)
