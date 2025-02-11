@@ -41,7 +41,7 @@ def draft_scenes(story: Story) -> list[Scene]:
                       text=scene_text,
                       summary_through_here=summarize_thus_far(summary_prior, scene_text))
         drafted_scenes.append(scene)
-        logger.info(f'...scene {i+1} drafted: "{scene.text[:500]}[...]"')
+        logger.info(f'...scene {i+1} drafted."')
     return drafted_scenes
 
 

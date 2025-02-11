@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class SceneDescription(BaseModel):
     """A planned scene for the story"""
     description: str = Field(..., title="Description", description="A brief description of this scene")
-    characters: str = Field(..., title="Characters", description="A list of just the characters featured in this scene")
+    characters: str = Field(..., title="Characters", description="A comma-separated list of just the characters featured in this scene")
 
 
 class SceneDescriptions(BaseModel):
