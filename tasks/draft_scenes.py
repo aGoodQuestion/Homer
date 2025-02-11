@@ -1,10 +1,10 @@
-from loguru import logger
-
 from structures import Story, Scene
 from structures.formats import SceneDraft
+from structures.enums import StatusType
 from models.language_model import LanguageModel
 from prompts import Prompts
-from tasks.summarize_thus_far import summarize_thus_far
+from tasks import summarize_thus_far
+from util.status import Status
 
 
 def draft_scene(scene_description: str, character_list: str, summary_prior: str) -> str:
@@ -25,14 +25,17 @@ def draft_scene(scene_description: str, character_list: str, summary_prior: str)
 def draft_scenes(story: Story) -> list[Scene]:
     drafted_scenes = []
     for i in range(story.num_scenes):
-        logger.info(f"Drafting scene {i+1}...")
+        Status().update(type=StatusType.MESSAGE,
+                        message=f"Drafting scene {i+1}...")
         scene_description = story.scenes_descriptions[i]
         if i == 0:
             summary_prior = "[This is the first scene in the story so nothing has happened yet.]"
         else:
-            logger.info(f"...summarizing the story thus far...")
+            Status().update(type=StatusType.MESSAGE,
+                            message=f"...summarizing the story thus far...")
             summary_prior = drafted_scenes[i-1].summary_through_here
-        logger.info(f"...drafting scene {i+1} text...")
+        Status().update(type=StatusType.MESSAGE,
+                        message=f"...drafting scene {i+1} text...")
         scene_text = draft_scene(scene_description=scene_description.description,
                                  character_list=story.selective_character_list_string(scene_description.characters),
                                  summary_prior=summary_prior)
@@ -41,7 +44,8 @@ def draft_scenes(story: Story) -> list[Scene]:
                       text=scene_text,
                       summary_through_here=summarize_thus_far(summary_prior, scene_text))
         drafted_scenes.append(scene)
-        logger.info(f'...scene {i+1} drafted."')
+        Status().update(type=StatusType.MESSAGE,
+                        message=f'...scene {i+1} drafted."')
     return drafted_scenes
 
 
