@@ -4,3 +4,4 @@ langgraph
 loguru
 python-dotenv
 pyyaml
+streamlit
