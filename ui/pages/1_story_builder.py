@@ -2,6 +2,7 @@ import streamlit as st
 
 from util.status import Status
 from structures.enums import StatusType
+from logic.core_logic import write_story
 
 st.set_page_config(
     layout="wide",
@@ -24,10 +25,7 @@ def main():
                            expanded=True,
                            state="running")
     Status().initialize(status_box)
-    Status().status_box.write("Does it work this way?")
-    Status().update(type=StatusType.MESSAGE, message="Just a test of the output singleton")
-    status_box.write("This is a different test of the status box.")
-    # finished_story = write_story(st.session_state["the_story"])
+    finished_story = write_story(st.session_state["the_story"])
 
 
 

@@ -3,7 +3,7 @@ from structures.formats import SceneDraft
 from structures.enums import StatusType
 from models.language_model import LanguageModel
 from prompts import Prompts
-from tasks import summarize_thus_far
+from tasks.summarize_thus_far import summarize_thus_far
 from util.status import Status
 
 

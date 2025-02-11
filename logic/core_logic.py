@@ -1,6 +1,7 @@
 from structures import Story
 from structures.enums import StatusType
-from tasks import plan_scenes, draft_scenes
+from tasks.plan_scenes import plan_scenes
+from tasks.draft_scenes import draft_scenes
 from util.status import Status
 
 
@@ -19,6 +20,6 @@ def write_story(the_story: Story) -> Story | None:
         Status().update(StatusType.CONCLUDE_FAILURE, "Scene drafting failed, story writing terminated.")
         return None
     the_story.scenes = scenes
-    Status().update(StatusType.CONCLUDE_SUCCESS, "...first draft of all scenes complete.")
+    Status().update(StatusType.MESSAGE, "...first draft of all scenes complete.")
 
     return the_story

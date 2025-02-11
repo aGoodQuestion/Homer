@@ -1,5 +1,3 @@
-from loguru import logger
-
 from structures import Story
 from models.language_model import LanguageModel
 from prompts import Prompts
@@ -8,7 +6,6 @@ from structures.formats.scene_description import SceneDescriptions
 
 def plan_scenes(story: Story) -> list[SceneDescriptions]:
     """Plan the scenes for a story"""
-    logger.info("Planning scenes...")
     prompt = Prompts().format_prompt("plan scenes",
                                      title=story.title,
                                      premise=story.premise,
@@ -19,5 +16,4 @@ def plan_scenes(story: Story) -> list[SceneDescriptions]:
                                                role=role,
                                                structure=SceneDescriptions)
     scenes = getattr(result, "scenes", [])
-    logger.info(f"...{len(scenes)} scenes planned.")
     return scenes
