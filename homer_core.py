@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 from loguru import logger
 
-from structures.Story import Story
-from structures.Character import Character
+from structures.story import Story
+from structures.character import Character
 from tasks.plan_scenes import plan_scenes
 
 
@@ -27,7 +27,7 @@ def main():
     if not scene_list:
         logger.error("Scene planning failed, story writing terminated.")
         return
-    the_story.scenes = scene_list
+    the_story.scenes_descriptions = scene_list
 
 
 

@@ -1,0 +1,7 @@
+Briefly summarize what has happened in the story so far by taking the provided summary of the story prior to a certain scene and adding your summary happens of the scene to it. Keeping your summarizing brief and to the point but be thorough in mentioning all major events, character interactions, and vital information.
+
+Here is the summary of the story so far:
+{partial_summary}
+
+And here is the scene:
+{scene}

@@ -2,11 +2,11 @@ from loguru import logger
 
 from structures import Story
 from models.language_model import LanguageModel
-from prompts.prompts import Prompts
-from structures.formats.scenes import Scenes
+from prompts import Prompts
+from structures.formats.scene_description import SceneDescriptions
 
 
-def plan_scenes(story: Story) -> list[Scenes]:
+def plan_scenes(story: Story) -> list[SceneDescriptions]:
     """Plan the scenes for a story"""
     logger.info("Planning scenes...")
     prompt = Prompts().format_prompt("plan scenes",
@@ -17,7 +17,7 @@ def plan_scenes(story: Story) -> list[Scenes]:
     role = """You are a professional writer, a skilled storyteller and master stylist, planning a new story."""
     result = LanguageModel().prompt_structured(question=prompt,
                                                role=role,
-                                               structure=Scenes)
+                                               structure=SceneDescriptions)
     scenes = getattr(result, "scenes", [])
     logger.info(f"...{len(scenes)} scenes planned.")
     return scenes

@@ -23,7 +23,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
             ]
-        logger.info(self.measure_prompt(question))
+        logger.info(self.measure_prompt(messages))
         try:
             resp = self.model.invoke(messages)
         except Exception as e:
@@ -36,7 +36,7 @@ class LanguageModel:
             SystemMessage(role),
             HumanMessage(question),
         ]
-        logger.info(self.measure_prompt(question))
+        logger.info(self.measure_prompt(messages))
         structured_model = self.model.with_structured_output(schema=structure)
         try:
             resp = structured_model.invoke(messages)
@@ -45,6 +45,11 @@ class LanguageModel:
             return None
         return resp
 
-    def measure_prompt(self, prompt: str):
-        return self.model.get_num_tokens(prompt)
+    def measure_prompt_elements(self, question: str, role: str = ""):
+        messages = question + role
+        return self.model.get_num_tokens(messages)
+
+    def measure_prompt(self, prompt: list):
+        return self.model.get_num_tokens_from_messages(prompt)
+
 
