@@ -11,6 +11,14 @@ st.set_page_config(
 )
 
 
+def display_story(story):
+    st.header(story.title)
+    for i, scene in enumerate(story.scenes):
+        with st.expander(f"Scene {i+1} ({len(scene.text.split())} words)", icon="📜"):
+            st.write(scene.text)
+
+
+
 def main():
     st.header("Homer the Storyteller")
     if not st.session_state["the_story"]:
@@ -27,6 +35,14 @@ def main():
     Status().initialize(status_box)
     finished_story = write_story(st.session_state["the_story"])
 
+    if not finished_story:
+        st.warning("Something has gone wrong--please go back to the homepage and try to generate a story again.",
+                   icon="🥸")
+        return
+
+    st.session_state["the_story"] = finished_story
+    st.success("Your story is complete! You can read it below.")
+    display_story(finished_story)
 
 
 if __name__ == "__main__":
