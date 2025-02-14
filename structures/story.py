@@ -1,16 +1,27 @@
 from loguru import logger
+from dataclasses import dataclass, field
 
-from structures import Character
+from structures.character import Character
+from structures.formats import SceneDescription
+from structures.scene import Scene
 
 
+@dataclass
 class Story:
-    def __init__(self, title: str, premise: str, num_scenes: int, characters: list[Character]):
-        self.title = title
-        self.premise = premise
-        self.num_scenes = num_scenes
-        self.characters = characters
-        self.scenes_descriptions = list()
-        self.scenes = list()
+    title: str
+    premise: str
+    num_scenes: int
+    characters: list[Character]
+    scene_descriptions: list[SceneDescription] = field(default_factory=list)
+    scenes: list[Scene] = field(default_factory=list)
+
+    # def __init__(self, title: str, premise: str, num_scenes: int, characters: list[Character]):
+    #     self.title = title
+    #     self.premise = premise
+    #     self.num_scenes = num_scenes
+    #     self.characters = characters
+    #     self.scenes_descriptions = list()
+    #     self.scenes = list()
 
     def character_list_string(self) -> str:
         string = ""
@@ -28,14 +39,3 @@ class Story:
         if character_list:
             logger.warning(f"Characters not found: {character_list}")
         return string
-
-
-    def display(self):
-        logger.success(f"Title: {self.title}")
-        logger.success(f"Premise: {self.premise}")
-        logger.success(f"Number of scenes: {self.num_scenes}")
-        logger.success("Scenes:")
-        for scene in self.scenes:
-            logger.info(f"Summary through this scene: {scene.summary_through_here}")
-            logger.success("The scene text itself:")
-            logger.info(scene.text)

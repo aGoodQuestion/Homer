@@ -28,7 +28,7 @@ def draft_scenes(story: Story) -> list[Scene]:
         Status().update(type=StatusType.MESSAGE,
                         message=f"Drafting scene {i + 1}...",
                         tabs=1)
-        scene_description = story.scenes_descriptions[i]
+        scene_description = story.scene_descriptions[i]
         if i == 0:
             summary_prior = "[This is the first scene in the story so nothing has happened yet.]"
         else:

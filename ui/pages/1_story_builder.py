@@ -11,12 +11,14 @@ st.set_page_config(
 )
 
 
-def display_story(story):
-    st.header(story.title)
-    for i, scene in enumerate(story.scenes):
+def display_story(story_graph):
+    st.header(story_graph["title"])
+    for i, scene in enumerate(story_graph["scenes"]):
         with st.expander(f"Scene {i+1} ({len(scene.text.split())} words)", icon="📜"):
             st.write(scene.text)
-
+    for i, scene_desc in enumerate(story_graph["scene_descriptions"]):
+        with st.expander(f"Scene Desc. {i+1}"):
+            st.write(scene_desc)
 
 
 def main():
@@ -29,7 +31,7 @@ def main():
     it to make sure that it is vivid, compelling, true to the characters, and just generally worthy of your story. Watch
     the space below to see what Homer is up to."""
     st.write(message)
-    status_box = st.status(label=f"Composing the {st.session_state["the_story"].title}...",
+    status_box = st.status(label=f'Composing "{st.session_state["the_story"].title}"...',
                            expanded=True,
                            state="running")
     Status().initialize(status_box)
@@ -41,6 +43,7 @@ def main():
         return
 
     st.session_state["the_story"] = finished_story
+    Status().update(StatusType.CONCLUDE_SUCCESS, "Composition complete.")
     st.success("Your story is complete! You can read it below.")
     display_story(finished_story)
 
