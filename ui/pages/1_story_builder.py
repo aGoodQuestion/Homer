@@ -13,6 +13,10 @@ st.set_page_config(
 
 def display_story(story_graph):
     st.header(story_graph["title"])
+    if len(story_graph["errors"]) > 0:
+        st.write("There were some errors in the story generation process:")
+        for error in story_graph["errors"]:
+            st.write(f" - {error}")
     for i, scene in enumerate(story_graph["scenes"]):
         with st.expander(f"Scene {i+1} ({len(scene.text.split())} words)", icon="📜"):
             st.write(scene.text)

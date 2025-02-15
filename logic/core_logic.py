@@ -13,10 +13,17 @@ def plan_story(state: Story):
     Status().update(StatusType.MESSAGE, f"Planning {state.num_scenes} scenes for {state.title}...")
     scene_list = plan_scenes(state)
     if not scene_list or len(scene_list) != state.num_scenes:
-        Status().update(StatusType.CONCLUDE_FAILURE, "Scene planning failed, story writing terminated.")
-        # return None
+        return {"errors": state.errors + ["Failed to generate a scene list."]}
     Status().update(StatusType.MESSAGE, f"...{state.num_scenes} planned.")
     return {"scene_descriptions": scene_list}
+
+
+def post_planning_edge(state: Story):
+    logger.debug("--Post Planning Edge--")
+    if state.errors:
+        Status().update(StatusType.CONCLUDE_FAILURE, "Scene planning failed, story writing terminated.")
+        return END
+    return "draft_story"
 
 
 def draft_story(state: Story):
@@ -24,18 +31,28 @@ def draft_story(state: Story):
     Status().update(StatusType.MESSAGE, "Putting together a first draft scene-by-scene...")
     scenes = draft_scenes(state)
     if not scenes or len(scenes) != state.num_scenes:
-        Status().update(StatusType.CONCLUDE_FAILURE, "Scene drafting failed, story writing terminated.")
-        # return None
+        return {"errors": state.errors + ["Failed to generate a scene list."]}
     Status().update(StatusType.MESSAGE, "...first draft of all scenes complete.")
     return {"scenes": scenes}
+
+
+def post_drafting_edge(state: Story):
+    logger.debug("--Post Drafting Edge--")
+    if state.errors:
+        Status().update(StatusType.CONCLUDE_FAILURE, "Scene drafting failed, story writing terminated.")
+        return END
+    return END
 
 
 builder = StateGraph(Story)
 builder.add_node("plan_story", plan_story)
 builder.add_node("draft_story", draft_story)
 builder.add_edge(START, "plan_story")
-builder.add_edge("plan_story", "draft_story")
-builder.add_edge("draft_story", END)
+builder.add_conditional_edges("plan_story", post_planning_edge)
+builder.add_conditional_edges("draft_story", post_drafting_edge)
+
+# builder.add_edge("plan_story", "draft_story")
+# builder.add_edge("draft_story", END)
 
 
 graph = builder.compile()

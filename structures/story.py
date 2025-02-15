@@ -14,14 +14,7 @@ class Story:
     characters: list[Character]
     scene_descriptions: list[SceneDescription] = field(default_factory=list)
     scenes: list[Scene] = field(default_factory=list)
-
-    # def __init__(self, title: str, premise: str, num_scenes: int, characters: list[Character]):
-    #     self.title = title
-    #     self.premise = premise
-    #     self.num_scenes = num_scenes
-    #     self.characters = characters
-    #     self.scenes_descriptions = list()
-    #     self.scenes = list()
+    errors: list[str] = field(default_factory=list)
 
     def character_list_string(self) -> str:
         string = ""
