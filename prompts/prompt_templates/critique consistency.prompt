@@ -1,0 +1,13 @@
+Thoughtfully and carefully consider whether a scene has any problems with its consistency. Specifically, consider whether the particulars of the scene properly align with those of the scene prior and whether characters behave in a way consistent with their general characterization and prior actions. Make sure to attend to specifics and details. Pay specially careful attention to logistical details like locations, relative position, what people in the scene are holding, wearing, or interacting with. Also attend carefully to mood, tone, and personality. Make sure that characters don't act in ways that don't make sense for their personality or context.
+
+Consistency in plot and characterization is key. It is fine to say that nothing needs fixing, but only if you've checked the scene over with great care and it really doesn't. Note even small inconsistencies.
+
+# Here is the scene that came just prior to the one you are considering. Use if for reference:
+{prior_scene}
+
+# And here are descriptions of the key characters in the scene, also useful for reference:
+{character_descriptions}
+
+# Here is the scene you should consider:
+{scene}
+

@@ -15,6 +15,7 @@ class Story:
     scene_descriptions: list[SceneDescription] = field(default_factory=list)
     scenes: list[Scene] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
+    critiques: dict = field(default_factory=dict)
 
     def character_list_string(self) -> str:
         string = ""
@@ -32,3 +33,7 @@ class Story:
         if character_list:
             logger.warning(f"Characters not found: {character_list}")
         return string
+
+    def __post_init__(self):
+        for i in range(self.num_scenes):
+            self.critiques[i] = []

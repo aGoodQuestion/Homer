@@ -5,6 +5,7 @@ from structures import Story
 from structures.enums import StatusType
 from tasks.plan_scenes import plan_scenes
 from tasks.draft_scenes import draft_scenes
+from tasks.critique_consistency import critique_consistency
 from util.status import Status
 
 
@@ -41,20 +42,27 @@ def post_drafting_edge(state: Story):
     if state.errors:
         Status().update(StatusType.CONCLUDE_FAILURE, "Scene drafting failed, story writing terminated.")
         return END
-    return END
+    return "critique_story_consistency"
+
+
+def critique_story_consistency(state: Story):
+    logger.debug("--Critique Story Consistency Node--")
+    Status().update(StatusType.MESSAGE, "Critiquing the story for internal consistency...")
+    critiques = critique_consistency(state)
+    Status().update(StatusType.MESSAGE, "...story consistency critiqued.")
+    for key, value in critiques.items():
+        logger.debug(f"Critique for scene {key}: {value}")
+    return {"critiques": {key: value + critiques[key] for key, value in state.critiques.items()}}
 
 
 builder = StateGraph(Story)
 builder.add_node("plan_story", plan_story)
 builder.add_node("draft_story", draft_story)
+builder.add_node("critique_story_consistency", critique_story_consistency)
 builder.add_edge(START, "plan_story")
+builder.add_edge("critique_story_consistency", END)
 builder.add_conditional_edges("plan_story", post_planning_edge)
 builder.add_conditional_edges("draft_story", post_drafting_edge)
-
-# builder.add_edge("plan_story", "draft_story")
-# builder.add_edge("draft_story", END)
-
-
 graph = builder.compile()
 
 

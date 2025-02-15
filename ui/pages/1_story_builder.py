@@ -23,6 +23,9 @@ def display_story(story_graph):
     for i, scene_desc in enumerate(story_graph["scene_descriptions"]):
         with st.expander(f"Scene Desc. {i+1}"):
             st.write(scene_desc)
+    for i, critique_list in story_graph["critiques"].items():
+        with st.expander(f"Critiques of {i+1}", icon="🪞"):
+            st.write(critique_list)
 
 
 def main():
