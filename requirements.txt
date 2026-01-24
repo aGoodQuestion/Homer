@@ -2,6 +2,7 @@ langchain
 langchain-openai
 langgraph
 loguru
+num2words
 python-dotenv
 pyyaml
 streamlit
